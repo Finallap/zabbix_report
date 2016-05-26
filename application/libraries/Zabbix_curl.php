@@ -70,18 +70,24 @@ class  Zabbix_curl{
 	    return $this->zabbix_curl_device($method,$params);
 	}
 
-	public function get_item($hostids_array = NULL)
+	public function get_item($hostids_array = NULL , $groupids_array = NULL)
 	{
-	    $method = "history.get";
-	    
+	    $method = "item.get";
+
 	    $params['history'] = 0;
 	    $params['hostids'] = $hostids_array;
+	    $params['groupids'] = $groupids_array;
 	    $params['output'] = 'extend';
-	    $params['time_from'] = $time_from;
-	    $params['time_till'] = $time_till;
 
 	    return $this->zabbix_curl_device($method,$params);
 	}
 
+	public function get_hostgroup()
+	{
+		$method = "hostgroup.get";
 
+	    $params['output'] = 'extend';
+
+	    return $this->zabbix_curl_device($method,$params);
+	}
 }

@@ -23,7 +23,9 @@ class Welcome extends CI_Controller {
 		$this->load->model('Host_group_model');
 		$this->load->library('zabbix_curl');
 
-		var_dump($this->zabbix_curl->get_history(array('27223'),1462896000,1463414400));
+		// var_dump($this->zabbix_curl->get_history(array('27223'),1462896000,1463414400));
+
+		echo $this->zabbix_curl->get_hostgroup();
 
 		// var_dump($this->Host_group_model->get_groups());
 		$this->load->view('template/header');
