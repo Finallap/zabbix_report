@@ -27,25 +27,21 @@
 			$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(11);
 			$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(8);
 			$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(8);
-			$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(11);
 
-
-	         $objPHPExcel->setActiveSheetIndex(0)
-	                          ->setCellValue('A1', '时间')
-	                          ->setCellValue('B1', 'hostid')
-	                          ->setCellValue('C1', '最小值')
-	                          ->setCellValue('D1', '最大值')
-	                          ->setCellValue('E1', '平均值');
+	        $objPHPExcel->setActiveSheetIndex(0)
+	                        ->setCellValue('A1', '时间')
+	                        ->setCellValue('B1', '最小值')
+	                        ->setCellValue('C1', '最大值')
+	                        ->setCellValue('D1', '平均值');
 
 	        foreach($data as $k => $v)
 	        {
 	             $num=$k+2;
 	             $objPHPExcel->setActiveSheetIndex(0)
 	                          ->setCellValue('A'.$num, $v['clock'])    
-	                          ->setCellValue('B'.$num, $v['hostid'])
-	                          ->setCellValue('C'.$num, $v['value_min'])
-	                          ->setCellValue('D'.$num, $v['value_max'])
-	                          ->setCellValue('E'.$num, $v['value_avg']);
+	                          ->setCellValue('B'.$num, $v['value_min'])
+	                          ->setCellValue('C'.$num, $v['value_max'])
+	                          ->setCellValue('D'.$num, $v['value_avg']);
 	        }
 	        $objPHPExcel->getActiveSheet()->setTitle('数据EXCEL导出');
 	        $objPHPExcel->setActiveSheetIndex(0);

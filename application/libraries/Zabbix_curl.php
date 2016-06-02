@@ -54,7 +54,9 @@ class  Zabbix_curl{
 	    curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
 	    curl_setopt($ch, CURLOPT_POST,1);
 	    curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
-	    return curl_exec($ch);
+	    $json_result_array = json_decode(curl_exec($ch) , TRUE);
+
+	    return $json_result_array['result'];
 	}
 
 	public function get_history($itemids_array = NULL,$time_from = 0,$time_till = 0)
@@ -77,6 +79,17 @@ class  Zabbix_curl{
 	    $params['history'] = 0;
 	    $params['hostids'] = $hostids_array;
 	    $params['groupids'] = $groupids_array;
+	    $params['output'] = 'extend';
+
+	    return $this->zabbix_curl_device($method,$params);
+	}
+
+	public function get_item_from_group($group = NULL)
+	{
+	    $method = "item.get";
+
+	    $params['history'] = 0;
+	    $params['group'] = $group;
 	    $params['output'] = 'extend';
 
 	    return $this->zabbix_curl_device($method,$params);
