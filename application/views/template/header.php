@@ -84,7 +84,7 @@
                     </a>
                   </li>
 
-                  <li id="fat-menu" class="dropdown">
+                    <li id="fat-menu" class="dropdown">
                       <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">
                           <i class="fa fa-user"></i> 
                           <i class="fa fa-caret-down"></i>
@@ -117,30 +117,13 @@
             <div class="span3">
                 <div class="sidebar-nav">
 
-                <div class="nav-header" data-toggle="collapse" data-target="#accounts-menu"><i class="fa fa-briefcase"></i>信息与查看与导出</div>
-                <ul id="accounts-menu" class="nav nav-list collapse in">
-                  <li><a tabindex="-1" href="<?php echo base_url('admin/data_query')?>">到课率统计</a></li>
-                  <li><a tabindex="-1" href="<?php echo base_url('admin/excel_out')?>">统计表格导出</a></li>
-                  <li><a tabindex="-1" href="<?php echo base_url('admin/login_situation')?>">登陆情况查看</a></li>
-                </ul>
-                <div class="nav-header" data-toggle="collapse" data-target="#legal-menu"><i class="fa fa-wrench"></i>账号设置</div>
-                <ul id="legal-menu" class="nav nav-list collapse in">
-                 <li><a tabindex="-1" href="<?php echo base_url('change_password')?>">账号密码修改</a></li>
-                 <li><a tabindex="-1" href="<?php echo base_url('admin/teacher_manager')?>">教师账户管理</a></li>
-                 <li><a tabindex="-1" href="<?php echo base_url('admin/student_manager')?>">查课员账户管理</a></li>
-                </ul>
-                <div class="nav-header" data-toggle="collapse" data-target="#legal1-menu"><i class="fa fa-cog"></i>系统设置与信息导入</div>
-                <ul id="legal1-menu" class="nav nav-list collapse in">
-                 <li><a tabindex="-1" href="<?php echo base_url('admin/notification_release')?>">系统公告发布</a></li>
-                 <li><a tabindex="-1" href="<?php echo base_url('admin/change_system_option')?>">学年学期设置</a></li>
-                 <li><a tabindex="-1" href="<?php echo base_url('admin/change_course_information')?>">课程信息管理</a></li>
-                 <li><a tabindex="-1" href="<?php echo base_url('admin/change_password')?>">教室信息管理</a></li>
-                 <li><a tabindex="-1" href="<?php echo base_url('admin/change_password')?>">班级信息管理</a></li>
-                </ul>
-                <div class="nav-header" data-toggle="collapse" data-target="#dashboard-menu"><i class="fa fa-align-justify"></i>系统介绍</div>
-                    <ul id="dashboard-menu" class="nav nav-list collapse in">
-                      <li><a href="<?php echo base_url('admin/suggestions')?>">查看系统反馈</a></li>    
-                      <li><a href="<?php echo base_url('system_description')?>">关于系统</a></li>
-                    </ul>
-            </div>
+                  <div class="nav-header" data-toggle="collapse" data-target="#dashboard-menu">
+                    <i class="fa fa-align-justify"></i>系统介绍
+                  </div>
+                  <ul id="dashboard-menu" class="nav nav-list collapse in">
+                    <li><a href="<?php echo base_url('admin/suggestions')?>">查看系统反馈</a></li>    
+                    <li><a href="<?php echo base_url('system_description')?>">关于系统</a></li>
+                  </ul>
+                  
+                </div>
         </div>

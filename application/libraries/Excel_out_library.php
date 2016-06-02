@@ -39,9 +39,9 @@
 	             $num=$k+2;
 	             $objPHPExcel->setActiveSheetIndex(0)
 	                          ->setCellValue('A'.$num, $v['clock'])    
-	                          ->setCellValue('B'.$num, $v['value_min'])
-	                          ->setCellValue('C'.$num, $v['value_max'])
-	                          ->setCellValue('D'.$num, $v['value_avg']);
+	                          ->setCellValue('B'.$num, $v['min_value'])
+	                          ->setCellValue('C'.$num, $v['max_value'])
+	                          ->setCellValue('D'.$num, $v['avg_value']);
 	        }
 	        $objPHPExcel->getActiveSheet()->setTitle('数据EXCEL导出');
 	        $objPHPExcel->setActiveSheetIndex(0);

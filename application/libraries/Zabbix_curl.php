@@ -103,4 +103,14 @@ class  Zabbix_curl{
 
 	    return $this->zabbix_curl_device($method,$params);
 	}
+
+	public function get_hostid($groupids_array = NULL)
+	{
+	    $method = "host.get";
+
+	    $params['groupids'] = $groupids_array;
+	    $params['output'] = 'extend';
+
+	    return $this->zabbix_curl_device($method,$params);
+	}
 }
