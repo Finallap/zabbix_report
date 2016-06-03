@@ -113,4 +113,24 @@ class  Zabbix_curl{
 
 	    return $this->zabbix_curl_device($method,$params);
 	}
+
+	public function get_group_name($groupids = NULL)
+	{
+		$method = "hostgroup.get";
+
+		$params['groupids'] = $groupids;
+	    $params['output'] = 'extend';
+
+	    return $this->zabbix_curl_device($method,$params)[0]['name'];
+	}
+
+	public function get_host_name($hostids = NULL)
+	{
+	    $method = "host.get";
+
+	    $params['hostids'] = $hostids;
+	    $params['output'] = 'extend';
+
+	    return $this->zabbix_curl_device($method,$params)[0]['name'];
+	}
 }

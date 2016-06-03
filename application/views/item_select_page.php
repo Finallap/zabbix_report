@@ -1,50 +1,69 @@
     <script type="text/javascript">   
     function check()
     {
-          var reg = new RegExp("^[0-9]*$");
-          if(!/^[0-9]*$/.test(document.getElementById("real_number").value))
-          {
-              alert("请在实到人数框内输入数字!");
-              return false;
-          }
-          else
-          {
-            if(document.getElementById("real_number").value == "")
-            {  
-                alert("请填写实到人数!"); 
-                return false;  
-            }
-            else
-            { 
-                if(confirm( '提交之后无法修改，请确定是否提交？ ')==false)
-                  return   false;
-                else
-                  return true;
-            }  
-          }
+        var checked = false;
+        var radios = document.getElementsByName('type');
+        for (var x=0; x<radios.length; x++) {
+            checked = checked || radios[x].checked;
+        }
+        if (!checked) {
+            alert("请选择导出方式");
+            return false;
+        }
+
+        if(document.getElementById("start_day").value == "")
+        {  
+            alert("请选择开始日期!"); 
+            return false;  
+        }
+
+        if(document.getElementById("end_day").value == "")
+        {  
+            alert("请选择结束日期!"); 
+            return false;  
+        }
+
+        if(document.getElementById("itemid").value == "-1")
+        {  
+            alert("请选择导出项目!"); 
+            return false;  
+        }
+
+        if(confirm( '提交之后无法修改，请确定是否提交？ ')==false)
+          return   false;
+        else
+          return true;
             
     }
-    </script>        
+    </script> 
 
         <div class="span9">
           <h1 class="page-title">Zabbix报表导出</h1>
           <div class="well">
               <ul class="nav nav-tabs">
-                  <li class="active"><a href="#home" data-toggle="tab">信息录入</a></li>
-                  <li><a href="<?php echo base_url('student/data_entry')?>">返回班级选择页面</a></li>
+                  <li class="active"><a href="#home" data-toggle="tab">项目选择</a></li>
+                  <li><a href="<?php echo site_url('')?>">返回首页</a></li>
               </ul>
               <div id="myTabContent" class="tab-content">
               <div class="tab-pane active in" id="home">
-              <form id="tab" action="<?php echo base_url('student/data_entry_action')?>" method="post" onSubmit="return check()">
+              <form id="tab" action="<?php echo site_url('report/excel_out_action')?>" method="post" onSubmit="return check()">
                 <label>现在时间：<?php echo date('Y-m-d H:i:s',time());?></label>
-                <label>目前学年：<?php echo $school_year;?></label>
-                <label>目前学期：<?php echo $term;?></label>
-                <label>目前周数：<?php echo $week;?></label>
+                <label>选择分组：<?php echo $group_name;?></label>
+                <label>选择主机：<?php echo $host_name;?></label>
+                <label>选择项目：</label>
+                <?php echo $item_select;?>
 
                 <hr />
-                <label>选择教室：<?php echo $classroom;?></label>
-                <input type="hidden" name="classroom" value="<?php echo $classroom;?>">
-                <label><input name="submit" type="submit" value="提交" class="btn btn-primary pull-letf"><label>
+                <label>导出起始日期选择</label>
+                <input type="text" id="datepicker" name="start_day" value="<?php echo $start_day;?>" class="input-xlarge">
+                <br>
+                <label>导出结束日期选择</label>
+                <input type="text" id="datepicker_end" name="end_day" value="<?php echo $end_day;?>" class="input-xlarge">
+                <br>
+                <label>导出方式</label>
+                <label><input name="type" type="radio" value="day" />按每小时<input name="type" type="radio" value="hour" />按每天</label> 
+
+                <label><input name="submit" type="submit" value="导出" class="btn btn-primary pull-letf"><label>
               </form>
               </div>
               </div>

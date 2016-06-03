@@ -8,7 +8,7 @@
               <p class="block-heading">单台机器报表导出</p>
                 <div class="block-body">
                   
-                <form id="tab" action="<?php echo site_url('student/data_entry_middleware')?>" method="post" onSubmit="return check()">
+                <form id="tab" action="<?php echo site_url('report/item_select')?>" method="post" onSubmit="return check()">
                   <label>机器分组</label>
                   <select name="groupid" id="groupid" class="input-xlarge" onchange="group_change(this);">
                       <option value="-1">请选择分组</option>

@@ -1,6 +1,6 @@
         <footer>
           <hr>
-          <p>技术支持：&copy; 2016 <a href="http://www.aifuwu.org">爱·服务公益社团</a></p>
+          <p>技术支持：&copy; 2016 <a href="http://www.huazhu.com">Huazhu All Rights reserved. 华住酒店管理有限公司</a></p>
         </footer>
   <!-- Le javascript
     ================================================== -->

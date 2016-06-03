@@ -52,23 +52,6 @@
   <!--[if IE 8 ]> <body class="ie ie8"> <![endif]-->
   <!--[if IE 9 ]> <body class="ie ie9"> <![endif]-->
   <!--[if (gt IE 9)|!(IE)]><!--> 
-  
-  <!-- Piwik -->
-  <script type="text/javascript">
-    var _paq = _paq || [];
-    _paq.push(["setDomains", ["*.checkclass.aifuwu.org"]]);
-    _paq.push(['trackPageView']);
-    _paq.push(['enableLinkTracking']);
-    (function() {
-      var u="//piwik.aifuwu.org/";
-      _paq.push(['setTrackerUrl', u+'piwik.php']);
-      _paq.push(['setSiteId', 24]);
-      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-    })();
-  </script>
-  <noscript><p><img src="//piwik.aifuwu.org/piwik.php?idsite=24" style="border:0;" alt="" /></p></noscript>
-  <!-- End Piwik Code -->
 
   <body> 
   <!--<![endif]-->
