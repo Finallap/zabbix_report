@@ -5,7 +5,6 @@ class Report extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->library('calculation_library');
 		$this->load->library('zabbix_curl');
 
 		$groupid_array = NULL; 
@@ -64,11 +63,43 @@ class Report extends CI_Controller {
 
 	public function excel_out_action()
 	{
-		echo $type = $this->input->post('type');
-		echo $itemid = $this->input->post('itemid');
+		$this->load->library('calculation_library');
 
-		echo $start_day = $this->input->post('start_day');
-		echo $end_day = $this->input->post('end_day');
+		$type = $this->input->post('type');
+		$itemid = $this->input->post('itemid');
+
+		$start_day = $this->input->post('start_day');
+		$end_day = $this->input->post('end_day');
+
+		if($itemid == -1)
+		{
+			$data['alert_information']="请选择导出项目！";
+			$data['href']="";
+			$this->load->view('template/alert_and_location_href',$data);
+		}
+
+		$start_time=strtotime($start_day);
+		$end_time=strtotime($end_day);
+		if($start_time>$end_time){$temp=$start_time;$start_time=$end_time;$end_time=$temp;}
+
+		$y=date("Y",$start_time); 
+		$m=date("m",$start_time); 
+		$d=date("d",$start_time); 
+
+		$time_from = mktime(0, 0, 0, $m, $d ,$y);
+
+		$y=date("Y",$end_time); 
+		$m=date("m",$end_time); 
+		$d=date("d",$end_time); 
+
+		$time_till = mktime(23, 59, 59, $m, $d ,$y);
+
+		if($type=="hour")
+			$time_interval = 3600;
+		else
+			$time_interval = 86400;
+
+		$this->calculation_library->history_out($itemid ,$time_from ,$time_till ,$time_interval);
 	}
 
 }
