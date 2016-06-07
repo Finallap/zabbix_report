@@ -5,6 +5,13 @@ class Report extends CI_Controller {
 
 	public function index()
 	{
+		$this->load->view('template/header');
+		$this->load->view('home');
+		$this->load->view('template/footer');
+	}
+
+	public function host_select()
+	{
 		date_default_timezone_set('PRC');
 		$this->load->library('zabbix_curl');
 
@@ -78,7 +85,7 @@ class Report extends CI_Controller {
 		if($itemid == -1)
 		{
 			$data['alert_information']="请选择导出项目！";
-			$data['href']="";
+			$data['href']="report/host_select";
 			$this->load->view('template/alert_and_location_href',$data);
 		}
 

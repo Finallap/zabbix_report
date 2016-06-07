@@ -82,7 +82,7 @@
                     <i class="fa fa-align-justify"></i>报表导出系统
                   </div>
                   <ul id="dashboard-menu" class="nav nav-list collapse in">
-                    <li><a href="<?php echo site_url('')?>">单台机器</a></li> 
+                    <li><a href="<?php echo site_url('report/host_select')?>">单台机器</a></li> 
                     <li><a href="<?php echo site_url('report/all_item_select')?>">所有机器</a></li> 
                     <li><a href="<?php echo base_url().'index.php/system_description';?>">关于系统</a></li>
                   </ul>
