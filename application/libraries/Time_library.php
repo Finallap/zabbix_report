@@ -42,6 +42,6 @@
 				$time_count = strtotime($this->getNextMonthFirstDay($time_temp['date']));
 			}
 
-			var_dump($time_array);
+			return $time_array;
 		}
 	}

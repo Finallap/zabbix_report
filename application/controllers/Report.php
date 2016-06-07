@@ -141,13 +141,14 @@ class Report extends CI_Controller {
 		$this->load->library('calculation_library');
 		$this->load->library('time_library');
 		$this->load->library('zabbix_curl');
+		$this->load->library('excel_out_library');
 
 		$result = NULL ;
 
 		$start_day = $this->input->post('start_day');
 		$end_day = $this->input->post('end_day');
 
-		$this->time_library->get_time_array('2016-4-5' , '2016-6-27');
+		$time_array = $this->time_library->get_time_array('2016-4-5' , '2016-6-27');
 
 		$item_name = 'CPU使用率';
 
@@ -159,8 +160,12 @@ class Report extends CI_Controller {
 			$host_result['host_name'] = $this->zabbix_curl->get_host_name($host_result['hostid']);
 			$host_result['itemid'] = $one_host['itemid'];
 
+			$host_result['detail'] = $this->calculation_library->calculation_month($host_result['itemid'] , $time_array);
+
+			$result[] = $host_result;
 			var_dump($host_result);
 		}
+
 	}
 	
 }
