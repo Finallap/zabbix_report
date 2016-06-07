@@ -9,34 +9,54 @@
 			include_once('PHPExcel.php');
 	    }
 
-	    public function detailed_record_excel_out($data,$name='Excel')
+	    public function detailed_record_excel_out($data,$header_data)
 	    {
+	    	$name = $header_data['host_name'].$header_data['item_name']."报表——".$header_data['start_day'].'至'.$header_data['end_day'];
+
 	    	$objPHPExcel = new PHPExcel();
 	        /*以下是一些设置 ，什么作者  标题啊之类的*/
-	         $objPHPExcel->getProperties()->setCreator("方垣闰")
-	                               ->setLastModifiedBy("方垣闰")
-	                               ->setTitle("数据EXCEL导出")
-	                               ->setSubject("数据EXCEL导出")
-	                               ->setDescription("数据EXCEL导出")
-	                               ->setKeywords("excel")
-	                               ->setCategory("excel");
+	         $objPHPExcel->getProperties()->setCreator("FANG YUANRUN")
+	                               ->setLastModifiedBy("FANG YUANRUN")
+	                               ->setTitle("Zabbix报表")
+	                               ->setSubject("Zabbix报表")
+	                               ->setDescription("Zabbix报表")
+	                               ->setKeywords("Zabbix")
+	                               ->setCategory("Zabbix");
 
 	         /*以下就是对处理Excel里的数据， 横着取数据，主要是这一步，其他基本都不要改*/
+	        $objPHPExcel->getActiveSheet()->mergeCells('A1:D1');
+	        $objPHPExcel->getActiveSheet()->mergeCells('A2:D2');
+	        $objPHPExcel->getActiveSheet()->mergeCells('A3:D3');
+	        $objPHPExcel->getActiveSheet()->mergeCells('A4:D4');
+	        $objPHPExcel->getActiveSheet()->mergeCells('A5:D5');
 
-			$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(10);
-			$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(11);
-			$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(8);
-			$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(8);
+	        $objPHPExcel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+	        $objPHPExcel->getActiveSheet()->getStyle('A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+			$objPHPExcel->getActiveSheet()->getStyle('A3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+			$objPHPExcel->getActiveSheet()->getStyle('A4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+			$objPHPExcel->getActiveSheet()->getStyle('A5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+			$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(25);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(15);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(15);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(15);
+
+			$objPHPExcel->setActiveSheetIndex(0)
+	                        ->setCellValue('A1', '华住酒店管理有限公司运维报表')    
+	                        ->setCellValue('A2', '机器分组：'.$header_data['group_name'])
+	                        ->setCellValue('A3', '机器名称：'.$header_data['host_name'])
+	                        ->setCellValue('A4', '项目名称：'.$header_data['item_name'])
+	                        ->setCellValue('A5', '导出时间范围：'.$header_data['start_day'].'至'.$header_data['end_day']);
 
 	        $objPHPExcel->setActiveSheetIndex(0)
-	                        ->setCellValue('A1', '时间')
-	                        ->setCellValue('B1', '最小值')
-	                        ->setCellValue('C1', '最大值')
-	                        ->setCellValue('D1', '平均值');
+	                        ->setCellValue('A6', '时间')
+	                        ->setCellValue('B6', '最小值')
+	                        ->setCellValue('C6', '最大值')
+	                        ->setCellValue('D6', '平均值');
 
 	        foreach($data as $k => $v)
 	        {
-	             $num=$k+2;
+	             $num=$k+7;
 	             $objPHPExcel->setActiveSheetIndex(0)
 	                          ->setCellValue('A'.$num, $v['clock'])    
 	                          ->setCellValue('B'.$num, $v['min_value'])

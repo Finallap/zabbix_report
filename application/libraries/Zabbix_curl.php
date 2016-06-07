@@ -51,6 +51,7 @@ class  Zabbix_curl{
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
 	    curl_setopt($ch, CURLOPT_URL,$this->url);
+	    curl_setopt($ch, CURLOPT_TIMEOUT,0);
 	    curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
 	    curl_setopt($ch, CURLOPT_POST,1);
 	    curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
@@ -79,6 +80,18 @@ class  Zabbix_curl{
 	    $params['history'] = 0;
 	    $params['hostids'] = $hostids_array;
 	    $params['groupids'] = $groupids_array;
+	    
+	    $params['output'] = 'extend';
+
+	    return $this->zabbix_curl_device($method,$params);
+	}
+
+	public function get_item_from_name($name)
+	{
+	    $method = "item.get";
+
+	    $params['history'] = 0;
+	    $params['filter'] = array('name' => $name);
 	    $params['output'] = 'extend';
 
 	    return $this->zabbix_curl_device($method,$params);
@@ -121,7 +134,8 @@ class  Zabbix_curl{
 		$params['groupids'] = $groupids;
 	    $params['output'] = 'extend';
 
-	    return $this->zabbix_curl_device($method,$params)[0]['name'];
+	    $result = $this->zabbix_curl_device($method,$params);
+	    return $result[0]['name'];
 	}
 
 	public function get_host_name($hostids = NULL)
@@ -131,6 +145,18 @@ class  Zabbix_curl{
 	    $params['hostids'] = $hostids;
 	    $params['output'] = 'extend';
 
-	    return $this->zabbix_curl_device($method,$params)[0]['name'];
+	    $result = $this->zabbix_curl_device($method,$params);
+	    return $result[0]['name'];
+	}
+
+	public function get_item_name($itemids = NULL)
+	{
+	    $method = "item.get";
+
+	    $params['itemids'] = $itemids;
+	    $params['output'] = 'extend';
+
+	    $result = $this->zabbix_curl_device($method,$params);
+	    return $result[0]['name'];
 	}
 }

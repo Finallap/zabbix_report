@@ -1,14 +1,33 @@
-<div class="span9">
-  <div class="faq-content">
-    <h1 class="page-title">Zabbix报表导出</h1>
-    <div class="row-fluid">
+    <script type="text/javascript">   
+    function check()
+    {
+        if(document.getElementById("groupid").value == "-1")
+        {  
+            alert("请选择分组!"); 
+            return false;  
+        }
+
+        if(document.getElementById("hostid").value == "-1")
+        {  
+            alert("请选择主机!"); 
+            return false;  
+        }
+
+        return true;
+            
+    }
+    </script> 
+
         <div class="span9">
-                  
-           <div class="block">
-              <p class="block-heading">单台机器报表导出</p>
-                <div class="block-body">
-                  
-                <form id="tab" action="<?php echo site_url('report/item_select')?>" method="post" onSubmit="return check()">
+          <h1 class="page-title">Zabbix报表导出</h1>
+          <div class="well">
+              <ul class="nav nav-tabs">
+                  <li class="active"><a href="#home" data-toggle="tab">机器选择</a></li>
+              </ul>
+              <div id="myTabContent" class="tab-content">
+                <div class="tab-pane active in" id="home">
+
+                  <form id="tab" action="<?php echo base_url().'index.php/report/item_select';?>" method="post" onSubmit="return check()">
                   <label>机器分组</label>
                   <select name="groupid" id="groupid" class="input-xlarge" onchange="group_change(this);">
                       <option value="-1">请选择分组</option>
@@ -34,7 +53,7 @@
                      function group_change(obj){ 
                      $.ajax({
                           type: "POST",
-                          url: "<?php echo site_url('ajax/group_get_host');?>",
+                          url: "<?php echo base_url().'index.php/ajax/group_get_host';?>",
                           data: {groupid:obj.value},
                           dataType:'html', 
                           success: function(msg){
@@ -46,29 +65,9 @@
                 </form>
 
                 </div>
-            </div>
-
-        </div>
-        
-        <div class="span3">
-          <div class="well toc">
-          <h3>使用方式</h3>
-          <h4>联系人：</h4>
-           <p>王晶</p>
-                <h4>联系电话：</h4>
-                <p>18951810421</p>
-                <h4>E-mail：</h4>
-                <p>wjing@njupt.edu.cn</p>
-                <h4>办公室地址：</h4>
-                <address>
-                学生事务服务中心大楼<br>
-                三楼323室
-                </address>
+              </div>
           </div>
-        </div>
 
-</div>
-</div>
 
         </div>
     </div>

@@ -16,7 +16,6 @@
 
     <script src="<?php echo base_url('assets/lib/jquery.min.js'); ?>" type="text/javascript"></script>
     <script src="<?php echo base_url('assets/lib/jquery-ui-1.11.4.custom/jquery-ui.min.js'); ?>"></script>
-    <script src="<?php echo base_url('assets/lib/Highcharts-4.2.3/js/highcharts.js'); ?>" type="text/javascript"></script>
 
 
     <!-- Demo page code -->
@@ -61,32 +60,11 @@
             <div class="container-fluid">
                 <a class="brand" href="<?php echo base_url('')?>"><img src="<?php echo base_url('assets/images/logo.png')?>" width="195" height="22"></a>
                 <ul class="nav pull-right">
-                  <li id="fat-menu" class="dropdown">
-                    <a href="<?php echo base_url('')?>" id="drop3" role="button" class="dropdown-toggle">
+<!--                   <li id="fat-menu" class="dropdown">
+                    <a href="<?php echo site_url('')?>" id="drop3" role="button" class="dropdown-toggle">
                         首页
                     </a>
-                  </li>
-
-                    <li id="fat-menu" class="dropdown">
-                      <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">
-                          <i class="fa fa-user"></i> 
-                          <i class="fa fa-caret-down"></i>
-                      </a>
-                      <ul class="dropdown-menu">
-                          <li><a tabindex="-1" href="<?php echo base_url('admin/data_entry')?>">查课情况录入</a></li>
-                          <li><a tabindex="-1" href="<?php echo base_url('admin/data_query')?>">已录入信息</a></li>
-                          <li><a tabindex="-1" href="<?php echo base_url('admin/login_situation')?>">登陆情况查看</a></li>
-                          <li><a tabindex="-1" href="<?php echo base_url('change_password')?>">账号密码修改</a></li>
-                          <li class="divider"></li>
-                          <li><a tabindex="-1" href="<?php echo base_url('sign_out')?>">注销</a></li>
-                      </ul>
-                    </li>
-                    
-                    <li id="fat-menu" class="dropdown">
-                        <a href="<?php echo base_url('sign_out')?>" id="drop3" role="button" class="dropdown-toggle">
-                             注销
-                        </a>
-                    </li>
+                  </li> -->
               </ul>
 
           </div>
@@ -101,11 +79,12 @@
                 <div class="sidebar-nav">
 
                   <div class="nav-header" data-toggle="collapse" data-target="#dashboard-menu">
-                    <i class="fa fa-align-justify"></i>系统介绍
+                    <i class="fa fa-align-justify"></i>报表导出系统
                   </div>
                   <ul id="dashboard-menu" class="nav nav-list collapse in">
-                    <li><a href="<?php echo base_url('admin/suggestions')?>">查看系统反馈</a></li>    
-                    <li><a href="<?php echo base_url('system_description')?>">关于系统</a></li>
+                    <li><a href="<?php echo site_url('')?>">单台机器</a></li> 
+                    <li><a href="<?php echo site_url('report/all_item_select')?>">所有机器</a></li> 
+                    <li><a href="<?php echo base_url().'index.php/system_description';?>">关于系统</a></li>
                   </ul>
                   
                 </div>

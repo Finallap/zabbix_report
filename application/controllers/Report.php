@@ -5,6 +5,7 @@ class Report extends CI_Controller {
 
 	public function index()
 	{
+		date_default_timezone_set('PRC');
 		$this->load->library('zabbix_curl');
 
 		$groupid_array = NULL; 
@@ -28,6 +29,7 @@ class Report extends CI_Controller {
 
 	public function item_select()
 	{
+		date_default_timezone_set('PRC');
 		$this->load->library('calculation_library');
 		$this->load->library('zabbix_curl');
 
@@ -63,7 +65,9 @@ class Report extends CI_Controller {
 
 	public function excel_out_action()
 	{
+		date_default_timezone_set('PRC');
 		$this->load->library('calculation_library');
+		$this->load->library('zabbix_curl');
 
 		$type = $this->input->post('type');
 		$itemid = $this->input->post('itemid');
@@ -99,7 +103,57 @@ class Report extends CI_Controller {
 		else
 			$time_interval = 86400;
 
-		$this->calculation_library->history_out($itemid ,$time_from ,$time_till ,$time_interval);
+		$header_data['group_name'] = $this->input->post('group_name');
+	    $header_data['host_name'] = $this->input->post('host_name');
+	    $header_data['item_name'] = $this->zabbix_curl->get_item_name($itemid);
+	    $header_data['start_day'] = date("Y-m-d",$time_from);
+	    $header_data['end_day'] = date("Y-m-d",$time_till);
+
+		$this->calculation_library->history_out($itemid ,$time_from ,$time_till ,$time_interval ,$header_data);
 	}
 
+	public function all_item_select()
+	{
+		date_default_timezone_set('PRC');
+		$this->load->library('calculation_library');
+		$this->load->library('zabbix_curl');
+
+		$data['start_day'] = date("Y-m-d",strtotime("-2 month"));
+		$data['end_day'] = date("Y-m-d");
+
+		$this->load->view('template/header');
+		$this->load->view('all_item_select_page' , $data);
+		$this->load->view('template/footer');
+		$this->load->view('template/datepicker_js');
+		$this->load->view('template/datepicker_end_js');
+	}
+
+	public function all_excel_out_action()
+	{
+		date_default_timezone_set('PRC');
+		$this->load->library('calculation_library');
+		$this->load->library('time_library');
+		$this->load->library('zabbix_curl');
+
+		$result = NULL ;
+
+		$start_day = $this->input->post('start_day');
+		$end_day = $this->input->post('end_day');
+
+		$this->time_library->get_time_array('2016-4-5' , '2016-6-27');
+
+		$item_name = 'CPU使用率';
+
+		$item_array = $this->zabbix_curl->get_item_from_name($item_name);
+		foreach ($item_array as $key => $one_host) {
+			$host_result = NULL ;
+
+			$host_result['hostid'] = $one_host['hostid'];
+			$host_result['host_name'] = $this->zabbix_curl->get_host_name($host_result['hostid']);
+			$host_result['itemid'] = $one_host['itemid'];
+
+			var_dump($host_result);
+		}
+	}
+	
 }
