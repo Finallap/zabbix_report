@@ -44,11 +44,19 @@
 			foreach ($time_array as $key => $time_result)
 			{
 				$history_decode_result = $this->CI->zabbix_curl->get_history($itemids_array , $time_result['time_from'] , $time_result['time_till']);
-				$result = $this->calculation_center($history_decode_result , $time_result['time_interval']);
-				foreach ($result as $key => $value)
+
+				if($history_decode_result)
+					$result[] = $this->month_calculation_center($history_decode_result);
+				else
 				{
-					$result[$key]['date'] = date('Y-m', $time_result['time_from']);
+					$temp['date'] = $time_result['date'];
 				}
+			}
+
+			if($result)
+			{
+				foreach ($result as $key => $value)
+					$result[$key]['date'] = date('Y-m', $time_result['time_from']);
 			}
 
 			return $result;
@@ -56,6 +64,8 @@
 
 	    protected function calculation_center($history_decode_result , $time_interval)
 	    {
+	    	$result = NULL;
+
 	    	$history_first_clock = $history_decode_result[0]['clock'];
 			$history_end_clock = end($history_decode_result)['clock'];
 
@@ -107,6 +117,51 @@
 					$end_clock += $time_interval;
 				}
 			}
+			return $result;
+	    }
+
+	    public function month_calculation_center($history_decode_result)
+	    {
+	    	$result = NULL;
+
+	    	$history_first_clock = $history_decode_result[0]['clock'];
+			$history_end_clock = end($history_decode_result)['clock'];
+
+			$y=date("Y",$history_first_clock); 
+			$m=date("m",$history_first_clock); 
+			$d=date("d",$history_first_clock); 
+			$h=date("H",$history_first_clock);
+
+			$start_clock = mktime($h, 0, 0, $m, $d ,$y); 
+
+			$count = 0;
+			$sum = 0;
+			$max_value = $history_decode_result[0]['value'];
+			$min_value = $history_decode_result[0]['value'];
+
+			foreach ($history_decode_result as $key => $history_item_array)
+			{
+					if($history_item_array['value']>$max_value)
+						$max_value = $history_item_array['value'];
+					if($history_item_array['value']<$min_value)
+						$min_value = $history_item_array['value'];
+
+					$sum += $history_item_array['value'];
+					$count++;
+			}
+
+			if($count==0)
+				$average = $sum;
+			else
+				$average = $sum/$count;
+
+			$item['clock'] = date('Y-m-d H:i:s', $start_clock);
+			$item['max_value'] = $max_value;
+			$item['min_value'] = $min_value;
+			$item['avg_value'] = $average;
+
+			$result = $item;
+
 			return $result;
 	    }
 

@@ -65,6 +65,101 @@
 	        }
 	        $objPHPExcel->getActiveSheet()->setTitle('数据EXCEL导出');
 	        $objPHPExcel->setActiveSheetIndex(0);
+	         header('Content-Type: application/vnd.ms-excel');
+	        header('Content-Disposition: attachment;filename="'.$name.'.xls"');
+	        header('Cache-Control: max-age=0');
+	        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+	        $objWriter->save('php://output');
+	    }
+
+	    public function all_record_excel_out($data = NULL,$header_data,$time_array)
+	    {
+	    	$name = $header_data['item_name']."报表——".$header_data['start_month'].'至'.$header_data['end_month'].'(导出时间：'.date('Y-m-d H:i:s',time()).')';
+
+	    	$objPHPExcel = new PHPExcel();
+	        /*以下是一些设置 ，什么作者  标题啊之类的*/
+	        $objPHPExcel->getProperties()->setCreator("FANG YUANRUN")
+	                               ->setLastModifiedBy("FANG YUANRUN")
+	                               ->setTitle("Zabbix报表")
+	                               ->setSubject("Zabbix报表")
+	                               ->setDescription("Zabbix报表")
+	                               ->setKeywords("Zabbix")
+	                               ->setCategory("Zabbix");
+
+	        $objPHPExcel->createSheet();
+	        $objPHPExcel->getActiveSheet()->setTitle('平均值');
+	        $objPHPExcel->setActiveSheetIndex(0);
+
+	        $objPHPExcel->createSheet();
+			$objPHPExcel->setactivesheetindex(1);
+			$objPHPExcel->getActiveSheet()->setTitle('最大值');
+
+			$objPHPExcel->createSheet();
+			$objPHPExcel->setactivesheetindex(2);
+			$objPHPExcel->getActiveSheet()->setTitle('最小值');
+
+	         /*以下就是对处理Excel里的数据， 横着取数据，主要是这一步，其他基本都不要改*/
+	        $column = 'A';
+
+	        $objPHPExcel->setactivesheetindex(0);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(40);
+			$objPHPExcel->setActiveSheetIndex(0)->setCellValue($column.'1', '主机名称');
+
+			$objPHPExcel->setactivesheetindex(1);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(40);
+			$objPHPExcel->setActiveSheetIndex(1)->setCellValue($column.'1', '主机名称');
+
+			$objPHPExcel->setactivesheetindex(2);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(40);
+			$objPHPExcel->setActiveSheetIndex(2)->setCellValue($column.'1', '主机名称');
+
+			$column = chr(ord($column)+1); 
+
+			foreach ($time_array as $key => $time_result)
+			{
+				$objPHPExcel->setactivesheetindex(0);
+				$objPHPExcel->getActiveSheet()->getColumnDimension($column)->setWidth(15);
+				$objPHPExcel->setActiveSheetIndex(0)->setCellValue($column.'1', $time_result['date']);
+
+				$objPHPExcel->setactivesheetindex(1);
+				$objPHPExcel->getActiveSheet()->getColumnDimension($column)->setWidth(15);
+				$objPHPExcel->setActiveSheetIndex(1)->setCellValue($column.'1', $time_result['date']);
+
+				$objPHPExcel->setactivesheetindex(2);
+				$objPHPExcel->getActiveSheet()->getColumnDimension($column)->setWidth(15);
+				$objPHPExcel->setActiveSheetIndex(2)->setCellValue($column.'1', $time_result['date']);
+
+				$column = chr(ord($column)+1); 
+			}
+
+			$row = 2;
+			foreach ($data as $key => $host_value)
+			{
+				$column = 'A';
+
+				$objPHPExcel->setActiveSheetIndex(0)->setCellValue($column.$row, $host_value['host_name']);
+				$objPHPExcel->setActiveSheetIndex(1)->setCellValue($column.$row, $host_value['host_name']);
+				$objPHPExcel->setActiveSheetIndex(2)->setCellValue($column.$row, $host_value['host_name']);
+
+				$column = chr(ord($column)+1);
+
+				if($host_value['detail']==NULL)
+				{
+					$row++;
+					continue;
+				}
+
+				foreach ($host_value['detail'] as $key => $value)
+				{
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue($column.$row, $value['avg_value']);
+					$objPHPExcel->setActiveSheetIndex(1)->setCellValue($column.$row, $value['max_value']);
+					$objPHPExcel->setActiveSheetIndex(2)->setCellValue($column.$row, $value['min_value']);
+					$column = chr(ord($column)+1);
+				}
+				
+				$row++;
+			}
+
 	        header('Content-Type: application/vnd.ms-excel');
 	        header('Content-Disposition: attachment;filename="'.$name.'.xls"');
 	        header('Cache-Control: max-age=0');

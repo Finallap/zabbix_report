@@ -1,4 +1,5 @@
 <?php
+set_time_limit(7200);
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Report extends CI_Controller {
@@ -72,6 +73,7 @@ class Report extends CI_Controller {
 
 	public function excel_out_action()
 	{
+		ignore_user_abort(true);
 		date_default_timezone_set('PRC');
 		$this->load->library('calculation_library');
 		$this->load->library('zabbix_curl');
@@ -137,6 +139,7 @@ class Report extends CI_Controller {
 
 	public function all_excel_out_action()
 	{
+		ignore_user_abort(true);
 		date_default_timezone_set('PRC');
 		$this->load->library('calculation_library');
 		$this->load->library('time_library');
@@ -145,27 +148,33 @@ class Report extends CI_Controller {
 
 		$result = NULL ;
 
+		$item_name = $this->input->post('itemname');
 		$start_day = $this->input->post('start_day');
 		$end_day = $this->input->post('end_day');
 
-		$time_array = $this->time_library->get_time_array('2016-4-5' , '2016-6-27');
+		$header_data['item_name'] = $item_name;
+		$header_data['start_month'] = date('Y-m', strtotime($start_day));
+		$header_data['end_month'] = date('Y-m', strtotime($start_day));
 
-		$item_name = 'CPU使用率';
+		$time_array = $this->time_library->get_time_array($start_day , $end_day);
 
+		// $item_array = array_slice($this->zabbix_curl->get_item_from_name($item_name), 0, 20);
 		$item_array = $this->zabbix_curl->get_item_from_name($item_name);
-		foreach ($item_array as $key => $one_host) {
+		foreach ($item_array as $key => $one_host)
+		{
 			$host_result = NULL ;
 
 			$host_result['hostid'] = $one_host['hostid'];
 			$host_result['host_name'] = $this->zabbix_curl->get_host_name($host_result['hostid']);
 			$host_result['itemid'] = $one_host['itemid'];
-
 			$host_result['detail'] = $this->calculation_library->calculation_month($host_result['itemid'] , $time_array);
 
 			$result[] = $host_result;
-			var_dump($host_result);
+
+			// var_dump($host_result);
 		}
 
+		$this->excel_out_library->all_record_excel_out($result,$header_data,$time_array);
 	}
 	
 }
