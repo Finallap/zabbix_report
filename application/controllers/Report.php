@@ -170,11 +170,9 @@ class Report extends CI_Controller {
 			$host_result['detail'] = $this->calculation_library->calculation_month($host_result['itemid'] , $time_array);
 
 			$result[] = $host_result;
-
-			// var_dump($host_result);
 		}
 
-		$this->excel_out_library->all_record_excel_out($result,$header_data,$time_array);
+		$this->excel_out_library->all_record_excel_out_other($result,$header_data,$time_array);
 	}
 	
 }

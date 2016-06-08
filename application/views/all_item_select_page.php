@@ -56,6 +56,12 @@
                    <option value="总虚拟内存空间">总虚拟内存空间</option>
                    <option value="文件读取 bytes/s">文件读取 bytes/s</option>
                    <option value="文件写入 bytes/s">文件写入 bytes/s</option>
+                   <option value="剩余swap空间">剩余swap空间</option>
+                   <option value=">剩余swap空间%">>剩余swap空间%</option>
+                   <option value="已使用swap空间%">已使用swap空间%</option>
+                   <option value="可用内存空间">可用内存空间</option>
+                   <option value="Agent ping">Agent ping</option>
+                   <option value="系统运行时间">系统运行时间</option>
                 </select>
 
                 <hr />
