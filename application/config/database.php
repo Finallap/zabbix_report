@@ -96,11 +96,11 @@ $db['default'] = array(
 );
 
 $db['zabbix_db'] = array(
-	'dsn' => 'mysql:dbname=zabbix;host=10.1.224.23;port=3306',
-    'hostname' => '10.1.224.23',
-    'port'     => '3306',
-    'username' => 'zabbix_view',
-    'password' => '123456',
+	'dsn' => 'mysql:dbname=zabbix;host=localhost;port=3306',
+	'hostname' => 'localhost',
+	'port'     => '3306',
+	'username' => 'zabbix',
+	'password' => '',
 	'database' => 'zabbix',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
